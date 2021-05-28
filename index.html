@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <!-- <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' media="All"/>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+      <div id="container" style="display:none; margin-bottom:2%">
+        <h1>Mapa de distribuição</h1>
+          <div id="map"></div>
+      <input id="tiltSlider" style="width: 30%" type="range" min="0" max="60" value="0" step="1">
+      </div>
+
+      <div class="TABELA" >
+        Total de vacinas:  <input id='numVacinas' type='text'> <button onclick='calcular()'>CALCULAR </button>
+         <table style='width:80%' id='myTable'>
+          <tr>
+            <th>UF</th>
+            <th>População</th>
+            <th>Casos Acumulados</th>
+        	<th>Óbitos Acumulados</th>
+        	<th>Vacinados</th>
+        	<th>Nº vacinas</th>
+          </tr>
+          <tr>
+        	<tr id='estado12'>
+        		<th>AC</th>
+        		<th><input id='estado12-pop' type='text' value='881935'> </th>
+        		<th><input id='estado12-casos' type='text' value='81505'> </th>
+        		<th><input id='estado12-obitos' type='text' value='1642'> </th>
+        		<th><input id='estado12-vacinados' type='text' value='48915'> </th>
+        		<th><input id='estado12-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado27'>
+        		<th>AL</th>
+        		<th><input id='estado27-pop' type='text' value='3337857'> </th>
+        		<th><input id='estado27-casos' type='text' value='189098'> </th>
+        		<th><input id='estado27-obitos' type='text' value='4625'> </th>
+        		<th><input id='estado27-vacinados' type='text' value='264393'> </th>
+        		<th><input id='estado27-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado13'>
+        		<th>AM</th>
+        		<th><input id='estado13-pop' type='text' value='4144597'> </th>
+        		<th><input id='estado13-casos' type='text' value='382845'> </th>
+        		<th><input id='estado13-obitos' type='text' value='12925'> </th>
+        		<th><input id='estado13-vacinados' type='text' value='425420'> </th>
+        		<th><input id='estado13-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado16'>
+        		<th>AP</th>
+        		<th><input id='estado16-pop' type='text' value='845731'> </th>
+        		<th><input id='estado16-casos' type='text' value='110654'> </th>
+        		<th><input id='estado16-obitos' type='text' value='1663'> </th>
+        		<th><input id='estado16-vacinados' type='text' value='51402'> </th>
+        		<th><input id='estado16-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado29'>
+        		<th>BA</th>
+        		<th><input id='estado29-pop' type='text' value='14873064'> </th>
+        		<th><input id='estado29-casos' type='text' value='984967'> </th>
+        		<th><input id='estado29-obitos' type='text' value='20499'> </th>
+        		<th><input id='estado29-vacinados' type='text' value='1445489'> </th>
+        		<th><input id='estado29-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado23'>
+        		<th>CE</th>
+        		<th><input id='estado23-pop' type='text' value='9132078'> </th>
+        		<th><input id='estado23-casos' type='text' value='775767'> </th>
+        		<th><input id='estado23-obitos' type='text' value='19848'> </th>
+        		<th><input id='estado23-vacinados' type='text' value='942322'> </th>
+        		<th><input id='estado23-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado53'>
+        		<th>DF</th>
+        		<th><input id='estado53-pop' type='text' value='3015268'> </th>
+        		<th><input id='estado53-casos' type='text' value='399349'> </th>
+        		<th><input id='estado53-obitos' type='text' value='8483'> </th>
+        		<th><input id='estado53-vacinados' type='text' value='302862'> </th>
+        		<th><input id='estado53-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado32'>
+        		<th>ES</th>
+        		<th><input id='estado32-pop' type='text' value='4018650'> </th>
+        		<th><input id='estado32-casos' type='text' value='471360'> </th>
+        		<th><input id='estado32-obitos' type='text' value='10587'> </th>
+        		<th><input id='estado32-vacinados' type='text' value='378980'> </th>
+        		<th><input id='estado32-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado52'>
+        		<th>GO</th>
+        		<th><input id='estado52-pop' type='text' value='7018354'> </th>
+        		<th><input id='estado52-casos' type='text' value='596088'> </th>
+        		<th><input id='estado52-obitos' type='text' value='16570'> </th>
+        		<th><input id='estado52-vacinados' type='text' value='616950'> </th>
+        		<th><input id='estado52-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado21'>
+        		<th>MA</th>
+        		<th><input id='estado21-pop' type='text' value='7075181'> </th>
+        		<th><input id='estado21-casos' type='text' value='284675'> </th>
+        		<th><input id='estado21-obitos' type='text' value='7919'> </th>
+        		<th><input id='estado21-vacinados' type='text' value='497018'> </th>
+        		<th><input id='estado21-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado31'>
+        		<th>MG</th>
+        		<th><input id='estado31-pop' type='text' value='21168791'> </th>
+        		<th><input id='estado31-casos' type='text' value='1518725'> </th>
+        		<th><input id='estado31-obitos' type='text' value='39128'> </th>
+        		<th><input id='estado31-vacinados' type='text' value='2156549'> </th>
+        		<th><input id='estado31-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado50'>
+        		<th>MS</th>
+        		<th><input id='estado50-pop' type='text' value='2778986'> </th>
+        		<th><input id='estado50-casos' type='text' value='278052'> </th>
+        		<th><input id='estado50-obitos' type='text' value='6492'> </th>
+        		<th><input id='estado50-vacinados' type='text' value='344703'> </th>
+        		<th><input id='estado50-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado51'>
+        		<th>MT</th>
+        		<th><input id='estado51-pop' type='text' value='3484466'> </th>
+        		<th><input id='estado51-casos' type='text' value='392865'> </th>
+        		<th><input id='estado51-obitos' type='text' value='10530'> </th>
+        		<th><input id='estado51-vacinados' type='text' value='269328'> </th>
+        		<th><input id='estado51-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado15'>
+        		<th>PA</th>
+        		<th><input id='estado15-pop' type='text' value='8602865'> </th>
+        		<th><input id='estado15-casos' type='text' value='508726'> </th>
+        		<th><input id='estado15-obitos' type='text' value='14264'> </th>
+        		<th><input id='estado15-vacinados' type='text' value='700222'> </th>
+        		<th><input id='estado15-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado25'>
+        		<th>PB</th>
+        		<th><input id='estado25-pop' type='text' value='4018127'> </th>
+        		<th><input id='estado25-casos' type='text' value='318261'> </th>
+        		<th><input id='estado25-obitos' type='text' value='7448'> </th>
+        		<th><input id='estado25-vacinados' type='text' value='408093'> </th>
+        		<th><input id='estado25-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado26'>
+        		<th>PE</th>
+        		<th><input id='estado26-pop' type='text' value='9557071'> </th>
+        		<th><input id='estado26-casos' type='text' value='463736'> </th>
+        		<th><input id='estado26-obitos' type='text' value='15393'> </th>
+        		<th><input id='estado26-vacinados' type='text' value='865625'> </th>
+        		<th><input id='estado26-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado22'>
+        		<th>PI</th>
+        		<th><input id='estado22-pop' type='text' value='3273227'> </th>
+        		<th><input id='estado22-casos' type='text' value='265916'> </th>
+        		<th><input id='estado22-obitos' type='text' value='5787'> </th>
+        		<th><input id='estado22-vacinados' type='text' value='271319'> </th>
+        		<th><input id='estado22-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado41'>
+        		<th>PR</th>
+        		<th><input id='estado41-pop' type='text' value='11433957'> </th>
+        		<th><input id='estado41-casos' type='text' value='1062401'> </th>
+        		<th><input id='estado41-obitos' type='text' value='25563'> </th>
+        		<th><input id='estado41-vacinados' type='text' value='1131320'> </th>
+        		<th><input id='estado41-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado33'>
+        		<th>RJ</th>
+        		<th><input id='estado33-pop' type='text' value='17264943'> </th>
+        		<th><input id='estado33-casos' type='text' value='844442'> </th>
+        		<th><input id='estado33-obitos' type='text' value='49539'> </th>
+        		<th><input id='estado33-vacinados' type='text' value='1419646'> </th>
+        		<th><input id='estado33-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado24'>
+        		<th>RN</th>
+        		<th><input id='estado24-pop' type='text' value='3506853'> </th>
+        		<th><input id='estado24-casos' type='text' value='260269'> </th>
+        		<th><input id='estado24-obitos' type='text' value='5989'> </th>
+        		<th><input id='estado24-vacinados' type='text' value='330446'> </th>
+        		<th><input id='estado24-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado11'>
+        		<th>RO</th>
+        		<th><input id='estado11-pop' type='text' value='1777225'> </th>
+        		<th><input id='estado11-casos' type='text' value='226107'> </th>
+        		<th><input id='estado11-obitos' type='text' value='5636'> </th>
+        		<th><input id='estado11-vacinados' type='text' value='121620'> </th>
+        		<th><input id='estado11-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado14'>
+        		<th>RR</th>
+        		<th><input id='estado14-pop' type='text' value='605761'> </th>
+        		<th><input id='estado14-casos' type='text' value='102102'> </th>
+        		<th><input id='estado14-obitos' type='text' value='1602'> </th>
+        		<th><input id='estado14-vacinados' type='text' value='52437'> </th>
+        		<th><input id='estado14-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado43'>
+        		<th>RS</th>
+        		<th><input id='estado43-pop' type='text' value='11377239'> </th>
+        		<th><input id='estado43-casos' type='text' value='1060777'> </th>
+        		<th><input id='estado43-obitos' type='text' value='27468'> </th>
+        		<th><input id='estado43-vacinados' type='text' value='1309299'> </th>
+        		<th><input id='estado43-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado42'>
+        		<th>SC</th>
+        		<th><input id='estado42-pop' type='text' value='7134788'> </th>
+        		<th><input id='estado42-casos' type='text' value='949365'> </th>
+        		<th><input id='estado42-obitos' type='text' value='14873'> </th>
+        		<th><input id='estado42-vacinados' type='text' value='698643'> </th>
+        		<th><input id='estado42-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado28'>
+        		<th>SE</th>
+        		<th><input id='estado28-pop' type='text' value='2298696'> </th>
+        		<th><input id='estado28-casos' type='text' value='226550'> </th>
+        		<th><input id='estado28-obitos' type='text' value='4927'> </th>
+        		<th><input id='estado28-vacinados' type='text' value='185353'> </th>
+        		<th><input id='estado28-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado35'>
+        		<th>SP</th>
+        		<th><input id='estado35-pop' type='text' value='45919046'> </th>
+        		<th><input id='estado35-casos' type='text' value='107677'> </th>
+        		<th><input id='estado35-obitos' type='text' value='3192727'> </th>
+        		<th><input id='estado35-vacinados' type='text' value='5307025'> </th>
+        		<th><input id='estado35-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr id='estado17'>
+        		<th>TO</th>
+        		<th><input id='estado17-pop' type='text' value='1572866'> </th>
+        		<th><input id='estado17-casos' type='text' value='2781'> </th>
+        		<th><input id='estado17-obitos' type='text' value='173427'> </th>
+        		<th><input id='estado17-vacinados' type='text' value='123809'> </th>
+        		<th><input id='estado17-vacinas' type='text' value='0' disabled> </th>
+        		<tr>
+        		<tr>
+        </table>
+      </div>
+  </body>
+</html>
