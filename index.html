@@ -11,9 +11,13 @@
   </head>
   <body>
 
+	<h1>Distribuição de Vacinas COVID-19</h1>
+
 	<div>
-	  Total de vacinas:  <input id='numVacinas' type='text'><br>
-	  <label for="opcoes">Distribuir baseado em:</label>
+		<h4>Para calcular o número de vacinas a ser distribuído para cada estado brasileiro, insira o número total de vacinas e em seguida 
+			selecione os parâmetros mais adequados para o seu contexto.<br><br>
+		<span>Número total de vacinas: </span><input id='numVacinas' type='text' placeholder="Digite o número"><br>
+	  <h4 for="opcoes">Distribuir baseado em:
 	  <select name="opcoes" id="opcoes" onchange="parametro_selecionado(this.value)">
 		<option value="casos">Casos</option>
 		<option value="obitos">Óbitos</option>
@@ -22,8 +26,8 @@
 	  </select>
 	  <br>
 	  <input type="checkbox" id="rebanho" checked="checked" value="rebanho">
-	  <label for="rebanho">Considerar vacinação em rebanho</label><br>
-	  <button onclick='calcular()'>Calcular Distribuição</button>
+	  <label for="rebanho">Considerar vacinação em rebanho</label><br><br>
+	  <button onclick='calcular()'>Calcular Distribuição</button></h4>
 	</div>
 
       <div class="TABELA">
@@ -263,8 +267,6 @@
 			<div id="map"></div>
 	  	<input id="tiltSlider" style="width: 30%" type="range" min="0" max="60" value="0" step="1">
 	  </div>
-
-
 
   </body>
 </html>

@@ -34,6 +34,12 @@ function calcular_por(parametro) {
   var vacinados;
   var casos;
 
+  console.log(numVacinas);
+  if(numVacinas == ''){
+    alert('Antes de calcular, você deve inserir o número total de vacinas!');
+    return;
+  }
+
   // Booleano para considerar vacinacao em rebanho
   var rebanho = document.getElementById('rebanho').checked;
 
