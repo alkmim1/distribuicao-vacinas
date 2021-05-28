@@ -57,7 +57,7 @@ function calcular_por(parametro) {
           obitos = document.getElementById(row.id + '-obitos').value;
           vacinas = document.getElementById(row.id + '-vacinas');
           peso = (obitos / total);
-          vacinas.value = Math.round(peso * numVacinas);
+          vacinas.value = numero_vacinas(peso,numVacinas);
         }
       }
     case 'populacao':
@@ -73,7 +73,7 @@ function calcular_por(parametro) {
           pop = document.getElementById(row.id + '-pop').value;
           vacinas = document.getElementById(row.id + '-vacinas');
           peso = (pop / total);
-          vacinas.value = Math.round(peso * numVacinas);
+          vacinas.value = numero_vacinas(peso,numVacinas);
         }
       }
     case 'vacinados':
@@ -89,7 +89,7 @@ function calcular_por(parametro) {
           vacinados = document.getElementById(row.id + '-vacinados').value;
           vacinas = document.getElementById(row.id + '-vacinas');
           peso = (vacinados / total);
-          vacinas.value = Math.round(peso * numVacinas);
+          vacinas.value = numero_vacinas(peso,numVacinas);
         }
       }
     default:
@@ -105,7 +105,7 @@ function calcular_por(parametro) {
           casos = document.getElementById(row.id + '-casos').value;
           vacinas = document.getElementById(row.id + '-vacinas');
           peso = (casos / total);
-          vacinas.value = Math.round(peso * numVacinas);
+          vacinas.value = numero_vacinas(peso,numVacinas);
         }
       }
   }
@@ -114,6 +114,12 @@ function calcular_por(parametro) {
   document.getElementById("mapaBrasil").focus();
   document.getElementById("mapaBrasil").scrollIntoView();
   start();
+}
+
+function numero_vacinas(peso,numVacinas){
+  var vacinas_estado = Math.round(peso * numVacinas);
+  var perc_vacinas_estado = parseFloat((vacinas_estado/numVacinas)*100).toFixed(2).toString();
+  return vacinas_estado.toString() + " (" + perc_vacinas_estado + "%)";
 }
 
 function estado(row){
