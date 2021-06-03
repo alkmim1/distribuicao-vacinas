@@ -48,7 +48,11 @@ function calcular_por(parametro) {
       for (let i in table.rows) {
         let row = table.rows[i]
         if (estado(row)) {
-          total += parseInt(document.getElementById(row.id + '-obitos').value);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = document.getElementById(row.id + '-pop').value;
+          if(!(rebanho && atingiu_rebanho(vacinados,pop))){
+            total += parseInt(document.getElementById(row.id + '-obitos').value);
+          }
         }
       }
       for (let i in table.rows) {
@@ -56,31 +60,52 @@ function calcular_por(parametro) {
         if (estado(row)) {
           obitos = document.getElementById(row.id + '-obitos').value;
           vacinas = document.getElementById(row.id + '-vacinas');
-          peso = (obitos / total);
-          vacinas.value = numero_vacinas(peso,numVacinas);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = document.getElementById(row.id + '-pop').value;
+          if(rebanho && atingiu_rebanho(vacinados,pop)){
+            vacinas.value = "0 (0%) - REBANHO";
+          }else{
+            peso = (obitos / total);
+            vacinas.value = numero_vacinas(peso,numVacinas);
+          }
         }
       }
+      break;
     case 'populacao':
       for (let i in table.rows) {
         let row = table.rows[i]
         if (estado(row)) {
-          total += parseInt(document.getElementById(row.id + '-pop').value);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = parseInt(document.getElementById(row.id + '-pop').value);
+          if(!(rebanho && atingiu_rebanho(vacinados,pop))){
+            total += pop;
+          }
         }
       }
       for (let i in table.rows) {
         let row = table.rows[i]
         if (estado(row)) {
-          pop = document.getElementById(row.id + '-pop').value;
           vacinas = document.getElementById(row.id + '-vacinas');
-          peso = (pop / total);
-          vacinas.value = numero_vacinas(peso,numVacinas);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = document.getElementById(row.id + '-pop').value;
+          if(rebanho && atingiu_rebanho(vacinados,pop)){
+            vacinas.value = "0 (0%) - REBANHO";
+          }else{
+            peso = (pop / total);
+            vacinas.value = numero_vacinas(peso,numVacinas);
+          }
         }
       }
+      break;
     case 'vacinados':
       for (let i in table.rows) {
         let row = table.rows[i]
         if (estado(row)) {
-          total += parseInt(document.getElementById(row.id + '-vacinados').value);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = parseInt(document.getElementById(row.id + '-pop').value);
+          if(!(rebanho && atingiu_rebanho(vacinados,pop))){
+            total += pop;
+          }
         }
       }
       for (let i in table.rows) {
@@ -88,15 +113,25 @@ function calcular_por(parametro) {
         if (estado(row)) {
           vacinados = document.getElementById(row.id + '-vacinados').value;
           vacinas = document.getElementById(row.id + '-vacinas');
-          peso = (vacinados / total);
-          vacinas.value = numero_vacinas(peso,numVacinas);
+          pop = document.getElementById(row.id + '-pop').value;
+          if(rebanho && atingiu_rebanho(vacinados,pop)){
+            vacinas.value = "0 (0%) - REBANHO";
+          }else{
+            peso = ((pop-vacinados) / total);
+            vacinas.value = numero_vacinas(peso,numVacinas);
+          }
         }
       }
+      break;
     default:
       for (let i in table.rows) {
         let row = table.rows[i]
         if (estado(row)) {
-          total += parseInt(document.getElementById(row.id + '-casos').value);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = document.getElementById(row.id + '-pop').value;
+          if(!(rebanho && atingiu_rebanho(vacinados,pop))){
+            total += parseInt(document.getElementById(row.id + '-casos').value);
+          }
         }
       }
       for (let i in table.rows) {
@@ -104,8 +139,14 @@ function calcular_por(parametro) {
         if (estado(row)) {
           casos = document.getElementById(row.id + '-casos').value;
           vacinas = document.getElementById(row.id + '-vacinas');
-          peso = (casos / total);
-          vacinas.value = numero_vacinas(peso,numVacinas);
+          vacinados = document.getElementById(row.id + '-vacinados').value;
+          pop = document.getElementById(row.id + '-pop').value;
+          if(rebanho && atingiu_rebanho(vacinados,pop)){
+            vacinas.value = "0 (0%) - REBANHO";
+          }else{
+            peso = (casos / total);
+            vacinas.value = numero_vacinas(peso,numVacinas);
+          }
         }
       }
   }
@@ -126,6 +167,10 @@ function estado(row){
   return row.id != undefined && row.id != '' && row.id.includes('estado');
 }
 
+function atingiu_rebanho(vacinados,populacao){
+  return (parseInt(vacinados) >= (parseInt(populacao) * 0.7));
+}
+
 function setWindowSize() {
   console.log("----", window.innerWidth, window.innerHeight)
   var width = (window.innerWidth - 6) / 2;
@@ -136,7 +181,6 @@ function setWindowSize() {
 function start() {
   if (!mapboxgl.supported()) alert('Your browser does not support Mapbox GL');
   else mapBoxInit();
-  //$( ".container" ).hide();
 }
 
 function mapBoxInit() {
